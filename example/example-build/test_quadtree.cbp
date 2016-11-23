@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="test_quadtree" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="D:/Pierre/Git/TP2_Algo/example/example-build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="D:/Pierre/Git/TP2_Algo/example/example-build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 edit_cache" />
+            <CompileFile command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="rebuild_cache">
+         <Option working_dir="D:/Pierre/Git/TP2_Algo/example/example-build" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 rebuild_cache" />
+            <CompileFile command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="test_quadtree">
+         <Option output="D:/Pierre/Git/TP2_Algo/example/example-build/test_quadtree.exe" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="D:/Pierre/Git/TP2_Algo/example/example-build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/../lib/gcc/i686-w64-mingw32/4.9.2/../../../../i686-w64-mingw32/include" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/../lib/gcc/i686-w64-mingw32/4.9.2/include" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/../lib/gcc/i686-w64-mingw32/4.9.2/include-fixed" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/lib/gcc/../../i686-w64-mingw32/include/c++" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/lib/gcc/../../i686-w64-mingw32/include/c++/backward" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/lib/gcc/../../i686-w64-mingw32/include/c++/i686-w64-mingw32" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 test_quadtree" />
+            <CompileFile command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="test_quadtree/fast">
+         <Option output="D:/Pierre/Git/TP2_Algo/example/example-build/test_quadtree.exe" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="D:/Pierre/Git/TP2_Algo/example/example-build" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/../lib/gcc/i686-w64-mingw32/4.9.2/../../../../i686-w64-mingw32/include" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/../lib/gcc/i686-w64-mingw32/4.9.2/include" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/../lib/gcc/i686-w64-mingw32/4.9.2/include-fixed" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/lib/gcc/../../i686-w64-mingw32/include/c++" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/lib/gcc/../../i686-w64-mingw32/include/c++/backward" />
+            <Add directory="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/lib/gcc/../../i686-w64-mingw32/include/c++/i686-w64-mingw32" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 test_quadtree/fast" />
+            <CompileFile command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="D:/Programmes/Qt/Qt5.5.1/Tools/mingw492_32/bin/mingw32-make.exe -f &quot;D:/Pierre/Git/TP2_Algo/example/example-build/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="D:/Pierre/Git/TP2_Algo/example/example/example.cpp">
+         <Option target="test_quadtree"/>
+      </Unit>
+      <Unit filename="D:/Pierre/Git/TP2_Algo/example/example/quadtree.h">
+         <Option target="test_quadtree"/>
+      </Unit>
+      <Unit filename="D:/Pierre/Git/TP2_Algo/example/example/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

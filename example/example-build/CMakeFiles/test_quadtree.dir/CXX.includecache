@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/Pierre/Git/TP2_Algo/example/example/example.cpp
+quadtree.h
+D:/Pierre/Git/TP2_Algo/example/example/quadtree.h
+
+D:/Pierre/Git/TP2_Algo/example/example/quadtree.h
+string
+-
+iostream
+-
+stdexcept
+-
+string
+-
+

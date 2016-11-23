@@ -24,8 +24,9 @@ int main()
                                                // qn = [[_,_,_,6],7,[_,_,2,_],4]
     // Modification with (sub)typing test: increment leaves at depth 1
     for (int d = 0; d < nbQuadDir; d++) {
-	QuadTree<int> *q = qn->son(d);
-	if (q && q->isLeaf()) q->value()++;    // qn = [[_,_,_,6],8,[_,_,2,_],5]
+        QuadTree<int> *q = qn->son(d);
+        if (q && q->isLeaf())
+            q->value()++;    // qn = [[_,_,_,6],8,[_,_,2,_],5]
     }
     qn->son(NW) = new QuadNode<int>(0,0,qn->son(NW),0);
                                        // qn = [[_,_,_,[_,_,6,_]],8,[_,_,2,_],5]

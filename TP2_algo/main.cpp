@@ -31,7 +31,7 @@ bool are_four_equal_leaves(QuadTree<byte>** sons){
     return(result);
 }
 
-void create_quadtree(QuadTree<byte>*& q, int i, int j, int depth, int pixel_depth, int size, const byte g){
+void create_quadtree(QuadTree<byte>*& q, int i, int j, int depth, int pixel_depth, int size, byte*& g){
     QuadTree<byte>** sons = new QuadTree<byte>*[nbQuadDir];
     for(int d=0; d < nbQuadDir; ++d){
         int i_new = 2*i + I[d];  // i "index" of the dth son of q
@@ -54,6 +54,21 @@ void create_quadtree(QuadTree<byte>*& q, int i, int j, int depth, int pixel_dept
 
 }
 
+void decode_quadtree(QuadTree<byte>*& q, int i, int j, int depth, int pixel_depth, int size, byte*& g, int val=0){
+    for(int d=0; d < nbQuadDir; ++d){
+        int i_new = 2*i + I[d];  // i "index" of the dth son of q
+        int j_new = 2*j + J[d];  // j "index" of the dth son of q
+        QuadTree<byte>* q_son = q->son(d);
+        if(q_son->isLeaf()){
+            byte value = q->value();
+        }
+        else{
+            decode_quadtree(q_son, i_new, j_new, depth+1, pixel_depth, size, g);
+        }
+    }
+
+}
+
 
 int main(int argc, char **argv)
 {
@@ -70,14 +85,17 @@ int main(int argc, char **argv)
     cout << "Number of pixels: " << width*height << endl;
     // Display image
     Window window = openWindow(width, height);
-    putGreyImage(IntPoint2(0,0), image, width, height);
+    //putGreyImage(IntPoint2(0,0), image, width, height);
     // Pause
-    click();
+    //click();
 
     // Question 3
     QuadTree<byte>* q = new QuadNode<byte>();
     int pixel_depth = int(log2(width));
     create_quadtree(q, 0, 0, 0, pixel_depth, width, image);
+
+    byte* decoded_image = new byte[width*width];
+    decode_quadtree(q, 0, 0, 0, pixel_depth, width, decoded_image);
 
     // Exit
     return 0;

@@ -105,20 +105,25 @@ int main(){
 //    //Pause
 //    click();
 
-    int width = 4;
-    byte* image = new byte[8];
-    image[0]= 255;
+//    int width = 4;
+//    byte* image = new byte[8];
+//    image[0]= 255;
+//    image[1]= 0;
+//    image[2]= 0;
+//    image[3]= 0;
+//    image[4]= 255;
+//    image[5]= 255;
+//    image[6]= 0;
+//    image[7] = 255;
+
+    int width = 2;
+    byte* image = new byte[4];
+    image[0]= 0;
     image[1]= 0;
     image[2]= 0;
     image[3]= 0;
-    image[4]= 255;
-    image[5]= 255;
-    image[6]= 0;
-    image[7] = 255;
-    Window window = openWindow(width, width);
-    putGreyImage(IntPoint2(0,0), image, width, width);
-    //Pause
-    click();
+
+
 
     // Question 3
     QuadTree<byte>* q = new QuadNode<byte>();

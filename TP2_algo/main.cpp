@@ -108,10 +108,14 @@ QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int local_size
 void decode_quadtree(int i, int j, int size, QuadTree<byte>* q, byte* image, int local_size=1){
     if(q->isLeaf()){
         int nb_cells = int(size/local_size);
-        cout<<nb_cells<<endl;
+        //Coloring the pixels corresponding to the leaf
         for(int i_pix=nb_cells*i; i_pix<nb_cells*(i+1);++i_pix){
             for(int j_pix=nb_cells*j; j_pix<nb_cells*(j+1);++j_pix){
-                image[i_pix + size*j_pix] = q->value();
+                if(i_pix==nb_cells*i || i_pix==nb_cells*(i+1)-1
+                        || j_pix==nb_cells*j || j_pix==nb_cells*(j+1)-1)
+                    image[i_pix + size*j_pix]= 128;
+                else
+                    image[i_pix + size*j_pix] = q->value();
             }
         }
     }
@@ -123,6 +127,17 @@ void decode_quadtree(int i, int j, int size, QuadTree<byte>* q, byte* image, int
     }
 }
 
+int number_elements(QuadTree<byte>* q){
+    if(q->isLeaf())
+        return(1);
+    else{
+        return(number_elements(q->son(0)) + number_elements(q->son(1))
+               + number_elements(q->son(2)) + number_elements(q->son(3)));
+    }
+}
+float compression_rate(QuadTree<byte>* q, int width, int height){
+    return( 1.f - (float)number_elements(q)/(float)(width * height) );
+}
 
 
 
@@ -148,8 +163,8 @@ int main(){
 
     //Pause
     click();
-
-    display(tree);
+    cout<<"Empirical compression rate: ";
+    cout<<compression_rate(tree, width, height)<<endl;
     // Exit
 
     return 0;

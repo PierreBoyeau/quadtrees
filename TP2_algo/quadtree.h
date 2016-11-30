@@ -272,7 +272,7 @@ void display(QuadTree<T>* qt, std::string prefix = "", void(*prt)(T) = nullptr)
         if (prt)
         (*prt)(qt->value());
         else
-        std::cout << qt->value();
+        std::cout << int(qt->value());
         std::cout << std::endl;
     }
     // Otherwise if tree is a branch node

@@ -83,14 +83,22 @@ QuadTree<byte>* create_quadtree_BW(int i, int j, int size, byte*& g,
     }
 }
 
-QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int local_size=1){
-    if(local_size == size)
-        return(new QuadLeaf<byte>(g[i+size*j]));
+
+QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int width, int height, int local_size=1){
+    if(local_size == size){
+        if(i<width && j<height){
+            //In this case the pixel is a image-pixel
+            return(new QuadLeaf<byte>(g[i+width*j]));
+        }
+        else{
+            return(new QuadLeaf<byte>(255));
+        }
+    }
     else{
-        QuadTree<byte>* son0 = create_quadtree(2*i, 2*j, size, g, 2*local_size);
-        QuadTree<byte>* son1 = create_quadtree(2*i+1, 2*j, size, g, 2*local_size);
-        QuadTree<byte>* son2 = create_quadtree(2*i+1, 2*j+1, size, g, 2*local_size);
-        QuadTree<byte>* son3 = create_quadtree(2*i, 2*j+1, size, g, 2*local_size);
+        QuadTree<byte>* son0 = create_quadtree(2*i, 2*j, size, g, width, height, 2*local_size);
+        QuadTree<byte>* son1 = create_quadtree(2*i+1, 2*j, size, g, width, height, 2*local_size);
+        QuadTree<byte>* son2 = create_quadtree(2*i+1, 2*j+1, size, g, width, height, 2*local_size);
+        QuadTree<byte>* son3 = create_quadtree(2*i, 2*j+1, size, g, width, height, 2*local_size);
 
         if(are_four_equal_leaves(son0, son1, son2, son3)){
             byte color = son0->value();
@@ -156,73 +164,43 @@ int main(){
     Window window = openWindow(width, height);
     //putGreyImage(IntPoint2(0,0), image, width, height);
 
-    QuadTree<byte>* tree = create_quadtree(0, 0, height, image);
-    byte *image_decoded = new byte[height*height];
-    decode_quadtree(0, 0, height, tree, image_decoded);
-    putGreyImage(0, 0, image_decoded, width, height);
+
+    int size = myPow(2, int(log2(max(width, height))) + 1);
+    QuadTree<byte>* tree = create_quadtree(0, 0, size, image, width, height);
+    byte *image_decoded = new byte[size*size];
+    decode_quadtree(0, 0, size, tree, image_decoded);
+    putGreyImage(0, 0, image_decoded, size, size);
 
     //Pause
     click();
     cout<<"Empirical compression rate: ";
-    cout<<compression_rate(tree, width, height)<<endl;
+    //cout<<compression_rate(tree, width, height)<<endl;
     // Exit
 
     return 0;
 }
 
 
-
-
-//    int width = 4;
-//    byte* image = new byte[16];
-//    image[0]= 255;
-//    image[1]= 255;
-//    image[2]= 255;
-//    image[3]= 255;
-//    image[4]= 255;
-//    image[5]= 255;
-//    image[6]= 255;
-//    image[7] = 255;
-//    image[8] = 255;
-//    image[9] = 255;
-//    image[10] = 255;
-//    image[11] = 255;
-//    image[12] = 255;
-//    image[13] = 255;
-//    image[14] = 255;
-//    image[15] = 255;
-//    QuadTree<byte>* q = create_quadtree(0, 0, 4, image);
-//    display(q);
-
-//    byte *image_decoded = new byte[width*width];
-//    decode_quadtree(0, 0, 4, q, image_decoded);
-//    for(int i = 0; i<16; ++i){
-//        cout<<i;
-//        cout<<": ";
-//        cout<<int(image_decoded[i])<<endl;
-//    }
-
-
-//void create_quadtree(QuadTree<byte>* q, int i, int j, int depth, int pixel_depth, int size, byte*& g){
-//    QuadTree<byte> **sons = new QuadTree<byte>*[nbQuadDir];
-//    cout<<depth<<endl;
-//    for(int d=0; d < nbQuadDir; ++d){
-//        int i_new = 2*i + I[d];  // i "index" of the dth son of q
-//        int j_new = 2*j + J[d];  // j "index" of the dth son of q
-//        if(depth == pixel_depth-1){
-//            sons[d] = new QuadLeaf<byte>(g[i_new + size*j_new]);
-//        }
-//        else{
-//            sons[d] = new QuadNode<byte>();
-//            create_quadtree(sons[d], i_new, j_new, depth+1, pixel_depth, size, g);
-//        }
-//    }
-//    if(are_four_equal_leaves(sons)){
-//        *q = QuadLeaf<byte>(sons[0]->value());
+//QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int local_size=1){
+//    if(local_size == size){
+//        return(new QuadLeaf<byte>(g[i+size*j]));
 //    }
 //    else{
-//        *q = QuadNode<byte>(sons[0], sons[1], sons[2], sons[3]);
+//        QuadTree<byte>* son0 = create_quadtree(2*i, 2*j, size, g, 2*local_size);
+//        QuadTree<byte>* son1 = create_quadtree(2*i+1, 2*j, size, g, 2*local_size);
+//        QuadTree<byte>* son2 = create_quadtree(2*i+1, 2*j+1, size, g, 2*local_size);
+//        QuadTree<byte>* son3 = create_quadtree(2*i, 2*j+1, size, g, 2*local_size);
+
+//        if(are_four_equal_leaves(son0, son1, son2, son3)){
+//            byte color = son0->value();
+//            return(new QuadLeaf<byte>(color));
+//        }
+
+//        else{
+//            QuadNode<byte>* new_node = new QuadNode<byte>(son0, son1, son2, son3);
+//            return(new_node);
+//        }
 //    }
-//    delete[] sons;
 //}
+
 

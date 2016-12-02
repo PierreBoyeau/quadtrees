@@ -6,7 +6,7 @@ file(TO_CMAKE_PATH "$ENV{IMAGINEPP_ROOT}" d)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${d}/CMake")
 find_package(Imagine)
 
-ImagineAddExecutable(TP2 main.cpp quadtree.h)
+ImagineAddExecutable(TP2 main.cpp quadtree.h tools.h tools.cpp)
 # ImagineAddExecutable(zipimage main.cpp ../quadtree/quadtree.h)
 
 ImagineUseModules(TP2 Graphics)

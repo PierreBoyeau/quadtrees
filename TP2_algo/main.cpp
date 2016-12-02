@@ -1,9 +1,8 @@
 #include <Imagine/Graphics.h>
 #include <algorithm>
 #include <iostream>
-#include <math.h>
-#include <stdexcept>
 #include "quadtree.h"
+#include "tools.h"
 
 using namespace Imagine;
 using namespace std;
@@ -63,25 +62,31 @@ bool are_four_similar_leaves(QuadTree<byte>* son0, QuadTree<byte>* son1,
 
 
 
-QuadTree<byte>* create_quadtree_BW(int i, int j, int size, byte*& g,
+QuadTree<byte>* create_quadtree_BW(int i, int j, int size,int width, int height, byte*& g,
                                    Whiteleaf *whiteleaf_ptr, Blackleaf *blackleaf_ptr, int local_size=1){
-    if(local_size == size){
-        if (g[i+size*j] == 0)
-            return(whiteleaf_ptr);
-        else if(g[i+size*j] == 255)
-            return(blackleaf_ptr);
-        else
-            throw invalid_argument("This image isn't B&W");
 
+    if(local_size == size){
+        if(i<width && j<height){
+            if (g[i+width*j] == 0)
+                return(whiteleaf_ptr);
+            else if(g[i+width*j] == 255)
+                return(blackleaf_ptr);
+            else
+                throw invalid_argument("This image isn't B&W");
+        }
+        else{
+            return(whiteleaf_ptr);
+        }
     }
+
     else{
-        QuadTree<byte>* son0 = create_quadtree_BW(2*i, 2*j, size, g,
+        QuadTree<byte>* son0 = create_quadtree_BW(2*i, 2*j, size, width, height, g,
                                                   whiteleaf_ptr, blackleaf_ptr, 2*local_size);
-        QuadTree<byte>* son1 = create_quadtree_BW(2*i+1, 2*j, size, g,
+        QuadTree<byte>* son1 = create_quadtree_BW(2*i+1, 2*j, size, width, height, g,
                                                   whiteleaf_ptr, blackleaf_ptr, 2*local_size);
-        QuadTree<byte>* son2 = create_quadtree_BW(2*i+1, 2*j+1, size, g,
+        QuadTree<byte>* son2 = create_quadtree_BW(2*i+1, 2*j+1, size, width, height, g,
                                                   whiteleaf_ptr, blackleaf_ptr, 2*local_size);
-        QuadTree<byte>* son3 = create_quadtree_BW(2*i, 2*j+1, size, g,
+        QuadTree<byte>* son3 = create_quadtree_BW(2*i, 2*j+1, size, width, height, g,
                                                   whiteleaf_ptr, blackleaf_ptr, 2*local_size);
 
         if(are_four_equal_leaves(son0, son1, son2, son3)){
@@ -126,34 +131,6 @@ QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int width, int
 }
 
 
-//QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int width, int height, int local_size=1){
-//    if(local_size == size){
-//        if(i<width && j<height){
-//            //In this case the pixel is a image-pixel
-//            return(new QuadLeaf<byte>(g[i+width*j]));
-//        }
-//        else{
-//            return(new QuadLeaf<byte>(255));
-//        }
-//    }
-//    else{
-//        QuadTree<byte>* son0 = create_quadtree(2*i, 2*j, size, g, width, height, 2*local_size);
-//        QuadTree<byte>* son1 = create_quadtree(2*i+1, 2*j, size, g, width, height, 2*local_size);
-//        QuadTree<byte>* son2 = create_quadtree(2*i+1, 2*j+1, size, g, width, height, 2*local_size);
-//        QuadTree<byte>* son3 = create_quadtree(2*i, 2*j+1, size, g, width, height, 2*local_size);
-
-//        if(are_four_equal_leaves(son0, son1, son2, son3)){
-//            byte color = son0->value();
-//            return(new QuadLeaf<byte>(color));
-//        }
-
-//        else{
-//            QuadNode<byte>* new_node = new QuadNode<byte>(son0, son1, son2, son3);
-//            return(new_node);
-//        }
-//    }
-//}
-
 
 void decode_quadtree(int i, int j, int size, QuadTree<byte>* q, byte* image, bool drawRectangles=false, int local_size=1){
     if(q->isLeaf()){
@@ -192,37 +169,11 @@ float compression_rate(QuadTree<byte>* q, int width, int height){
 }
 
 
-
 int main(){
-//    // Get image file
-//    const char *image_file = (argc > 1) ? argv[1] : srcPath("/running-horse-square.png");
-//    // Load image
-//    byte* image;
-//    int width, height;
-//    cout << "Loading image: " << image_file << endl;
-//    loadGreyImage(image_file, image, width, height);
-//    // Print statistics
-//    cout << "Image size: " << width << "x" << height << endl;
-//    cout << "Number of pixels: " << width*height << endl;
-//    //Display image
-//    Window window = openWindow(width, height);
-//    //putGreyImage(IntPoint2(0,0), image, width, height);
 
-
-//    int size = myPow(2, int(log2(max(width, height))) + 1);
-//    QuadTree<byte>* tree = create_quadtree(0, 0, size, image, width, height);
-//    byte *image_decoded = new byte[size*size];
-//    decode_quadtree(0, 0, size, tree, image_decoded);
-//    putGreyImage(0, 0, image_decoded, size, size);
-
-//    //Pause
-//    click();
-//    cout<<"Empirical compression rate: ";
-//    //cout<<compression_rate(tree, width, height)<<endl;
-//    // Exit
 
     // Get image file
-    const char *image_file = (argc > 1) ? argv[1] : srcPath("/lena.png");
+    const char *image_file = (argc > 1) ? argv[1] : srcPath("/running-horse-square.png");
     // Load image
     byte* image;
     int width, height;
@@ -237,7 +188,11 @@ int main(){
 
 
     int size = myPow(2, int(log2(max(width, height))) + 1);
-    QuadTree<byte>* tree = create_quadtree(0, 0, size, image, width, height, 50);
+    Whiteleaf* myWhiteleaf;
+    myWhiteleaf = new Whiteleaf();
+    Blackleaf* myBlackleaf;
+    myBlackleaf = new Blackleaf();
+    QuadTree<byte>* tree = create_quadtree_BW(0, 0, size, width, height, image, myWhiteleaf, myBlackleaf);
     byte *image_decoded = new byte[size*size];
     decode_quadtree(0, 0, size, tree, image_decoded);
     putGreyImage(0, 0, image_decoded, size, size);
@@ -245,35 +200,37 @@ int main(){
     //Pause
     click();
     cout<<"Empirical compression rate: ";
-    //cout<<compression_rate(tree, width, height)<<endl;
+    cout<<compression_rate(tree, width, height)<<endl;
     // Exit
+
+//    // Get image file
+//    const char *image_file = (argc > 1) ? argv[1] : srcPath("/lena.png");
+//    // Load image
+//    byte* image;
+//    int width, height;
+//    cout << "Loading image: " << image_file << endl;
+//    loadGreyImage(image_file, image, width, height);
+//    // Print statistics
+//    cout << "Image size: " << width << "x" << height << endl;
+//    cout << "Number of pixels: " << width*height << endl;
+//    //Display image
+//    Window window = openWindow(width, height);
+//    //putGreyImage(IntPoint2(0,0), image, width, height);
+
+
+//    int size = myPow(2, int(log2(max(width, height))) + 1);
+//    QuadTree<byte>* tree = create_quadtree(0, 0, size, image, width, height, 30);
+//    byte *image_decoded = new byte[size*size];
+//    decode_quadtree(0, 0, size, tree, image_decoded);
+//    putGreyImage(0, 0, image_decoded, size, size);
+
+//    //Pause
+//    click();
+//    cout<<"Empirical compression rate: ";
+//    cout<<compression_rate(tree, width, height)<<endl;
+//    // Exit
 
 
 
     return 0;
 }
-
-
-//QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int local_size=1){
-//    if(local_size == size){
-//        return(new QuadLeaf<byte>(g[i+size*j]));
-//    }
-//    else{
-//        QuadTree<byte>* son0 = create_quadtree(2*i, 2*j, size, g, 2*local_size);
-//        QuadTree<byte>* son1 = create_quadtree(2*i+1, 2*j, size, g, 2*local_size);
-//        QuadTree<byte>* son2 = create_quadtree(2*i+1, 2*j+1, size, g, 2*local_size);
-//        QuadTree<byte>* son3 = create_quadtree(2*i, 2*j+1, size, g, 2*local_size);
-
-//        if(are_four_equal_leaves(son0, son1, son2, son3)){
-//            byte color = son0->value();
-//            return(new QuadLeaf<byte>(color));
-//        }
-
-//        else{
-//            QuadNode<byte>* new_node = new QuadNode<byte>(son0, son1, son2, son3);
-//            return(new_node);
-//        }
-//    }
-//}
-
-

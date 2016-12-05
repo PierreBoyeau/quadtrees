@@ -15,7 +15,7 @@ using namespace std;
 
 int main(){
 
-    // B&W Image Example
+    // -------------------B&W Image Example------------------------
     // Get image file
     const char *image_file0 = (argc > 1) ? argv[1] : srcPath("/running-horse-rect.png");
     // Load image
@@ -36,41 +36,68 @@ int main(){
     myBlackleaf = new Blackleaf();
     QuadTree<byte>* tree0 = create_quadtree_BW(size0, width0, height0, image0, myWhiteleaf, myBlackleaf);
     byte *image_decoded0 = new byte[size0*size0];
-    decode_quadtree(0, 0, size0, tree0, image_decoded0, true);
+    decode_quadtree(size0, tree0, image_decoded0, true);
     putGreyImage(0, 0, image_decoded0, size0, size0);
+    // Pause
+    click();
+    cout<<"Empirical compression rate: ";
+    cout<<compression_rate(tree0, width0, height0)<<endl;
+    closeWindow(window0);
+    // Pointers suppression
+    delete image0;
+    delete image_decoded0;
+
+    // -------------- Grey image example 1------------------------
+    // Get image file
+    const char *image_file = (argc > 1) ? argv[1] : srcPath("/lena.png");
+    // Load image
+    byte* image;
+    int width, height;
+    cout << "Loading image: " << image_file << endl;
+    loadGreyImage(image_file, image, width, height);
+    // Print statistics
+    cout << "Image size: " << width << "x" << height << endl;
+    cout << "Number of pixels: " << width*height << endl;
+    //Display image
+    Window window1 = openWindow(width, height);
+    //putGreyImage(IntPoint2(0,0), image, width, height);
+    int size = myPow(2, int(log2(max(width, height))) + 1);
+    QuadTree<byte>* tree = create_quadtree(size, image, width, height, 20);
+    byte *image_decoded = new byte[size*size];
+    decode_quadtree(size, tree, image_decoded);
+    putGreyImage(0, 0, image_decoded, size, size);
 
     //Pause
     click();
     cout<<"Empirical compression rate: ";
-    cout<<compression_rate(tree0, width0, height0)<<endl;
-
-//    // Grey image example
-//    // Get image file
-//    const char *image_file = (argc > 1) ? argv[1] : srcPath("/lena.png");
-//    // Load image
-//    byte* image;
-//    int width, height;
-//    cout << "Loading image: " << image_file << endl;
-//    loadGreyImage(image_file, image, width, height);
-//    // Print statistics
-//    cout << "Image size: " << width << "x" << height << endl;
-//    cout << "Number of pixels: " << width*height << endl;
-//    //Display image
-//    Window window = openWindow(width, height);
-//    //putGreyImage(IntPoint2(0,0), image, width, height);
+    cout<<compression_rate(tree, width, height)<<endl;
+    closeWindow(window1);
+    // Exit
 
 
-//    int size = myPow(2, int(log2(max(width, height))) + 1);
-//    QuadTree<byte>* tree = create_quadtree(0, 0, size, image, width, height, 30);
-//    byte *image_decoded = new byte[size*size];
-//    decode_quadtree(0, 0, size, tree, image_decoded);
-//    putGreyImage(0, 0, image_decoded, size, size);
+    // -------------- Grey image example 2------------------------
+    // Get image file
+    // Load image
+    byte* image2;
+    cout << "Loading image: " << image_file << endl;
+    loadGreyImage(image_file, image2, width, height);
+    // Print statistics
+    cout << "Image size: " << width << "x" << height << endl;
+    cout << "Number of pixels: " << width*height << endl;
+    //Display image
+    Window window2 = openWindow(width, height);
+    //putGreyImage(IntPoint2(0,0), image, width, height);
+    QuadTree<byte>* tree2 = create_quadtree(size, image2, width, height, 50);
+    byte *image_decoded2 = new byte[size*size];
+    decode_quadtree(size, tree2, image_decoded2, true);
+    putGreyImage(0, 0, image_decoded2, size, size);
 
-//    //Pause
-//    click();
-//    cout<<"Empirical compression rate: ";
-//    cout<<compression_rate(tree, width, height)<<endl;
-//    // Exit
+    //Pause
+    click();
+    cout<<"Empirical compression rate: ";
+    cout<<compression_rate(tree, width, height)<<endl;
+    closeWindow(window2);
+    // Exit
 
 
 

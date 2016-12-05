@@ -72,7 +72,7 @@ QuadTree<byte>* create_quadtree_BW(int size,int width, int height, byte*& g,
 }
 
 
-QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int width, int height, int epsilon, int local_size){
+QuadTree<byte>* create_quadtree(int size, byte*& g, int width, int height, int epsilon, int local_size, int i, int j){
     if(local_size == size){
         if(i<width && j<height){
             //In this case the pixel is a image-pixel
@@ -83,10 +83,10 @@ QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int width, int
         }
     }
     else{
-        QuadTree<byte>* son0 = create_quadtree(2*i, 2*j, size, g, width, height, epsilon, 2*local_size);
-        QuadTree<byte>* son1 = create_quadtree(2*i+1, 2*j, size, g, width, height, epsilon, 2*local_size);
-        QuadTree<byte>* son2 = create_quadtree(2*i+1, 2*j+1, size, g, width, height, epsilon, 2*local_size);
-        QuadTree<byte>* son3 = create_quadtree(2*i, 2*j+1, size, g, width, height, epsilon, 2*local_size);
+        QuadTree<byte>* son0 = create_quadtree(size, g, width, height, epsilon, 2*local_size, 2*i, 2*j);
+        QuadTree<byte>* son1 = create_quadtree(size, g, width, height, epsilon, 2*local_size, 2*i+1, 2*j);
+        QuadTree<byte>* son2 = create_quadtree(size, g, width, height, epsilon, 2*local_size, 2*i+1, 2*j+1);
+        QuadTree<byte>* son3 = create_quadtree(size, g, width, height, epsilon, 2*local_size, 2*i, 2*j+1);
 
         if(are_four_similar_leaves(son0, son1, son2, son3, epsilon)){
             byte color = son0->value();
@@ -102,7 +102,7 @@ QuadTree<byte>* create_quadtree(int i, int j, int size, byte*& g, int width, int
 
 
 
-void decode_quadtree(int i, int j, int size, QuadTree<byte>* q, byte* image, bool drawRectangles, int local_size){
+void decode_quadtree(int size, QuadTree<byte>* q, byte* image, bool drawRectangles, int local_size, int i, int j){
     if(q->isLeaf()){
         int nb_cells = int(size/local_size);
         //Coloring the pixels corresponding to the leaf
@@ -119,10 +119,10 @@ void decode_quadtree(int i, int j, int size, QuadTree<byte>* q, byte* image, boo
         }
     }
     else{
-        decode_quadtree(2*i, 2*j, size, q->son(0), image, drawRectangles, 2*local_size);
-        decode_quadtree(2*i+1, 2*j, size, q->son(1), image, drawRectangles, 2*local_size);
-        decode_quadtree(2*i+1, 2*j+1, size, q->son(2), image, drawRectangles, 2*local_size);
-        decode_quadtree(2*i, 2*j+1, size, q->son(3), image, drawRectangles, 2*local_size);
+        decode_quadtree(size, q->son(0), image, drawRectangles, 2*local_size, 2*i, 2*j);
+        decode_quadtree(size, q->son(1), image, drawRectangles, 2*local_size, 2*i+1, 2*j);
+        decode_quadtree(size, q->son(2), image, drawRectangles, 2*local_size, 2*i+1, 2*j+1);
+        decode_quadtree(size, q->son(3), image, drawRectangles, 2*local_size, 2*i, 2*j+1);
     }
 }
 

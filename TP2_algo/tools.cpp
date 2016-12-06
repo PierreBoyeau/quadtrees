@@ -1,7 +1,6 @@
 #include "tools.h"
 
 
-
 int myPow(int x, int p) {
   if (p == 0) return 1;
   if (p == 1) return x;
@@ -30,8 +29,6 @@ bool are_four_similar_leaves(QuadTree<byte>* son0, QuadTree<byte>* son1,
     }
     return(result);
 }
-
-
 
 QuadTree<byte>* create_quadtree_BW(int size,int width, int height, byte*& g,
                                    Whiteleaf *whiteleaf_ptr, Blackleaf *blackleaf_ptr, int local_size, int i, int j){
@@ -71,7 +68,6 @@ QuadTree<byte>* create_quadtree_BW(int size,int width, int height, byte*& g,
     }
 }
 
-
 QuadTree<byte>* create_quadtree(int size, byte*& g, int width, int height, int epsilon, int local_size, int i, int j){
     if(local_size == size){
         if(i<width && j<height){
@@ -100,7 +96,23 @@ QuadTree<byte>* create_quadtree(int size, byte*& g, int width, int height, int e
     }
 }
 
+void create_quadtree_color(int size, byte*& red_img, byte*& green_img, byte*& blue_img,
+                           QuadTree<byte>*& red_tree, QuadTree<byte>*& green_tree, QuadTree<byte>*& blue_tree,
+                           int width, int height, int epsilon){
+    red_tree = create_quadtree(size, red_img, width, height, epsilon);
+    green_tree = create_quadtree(size, green_img, width, height, epsilon);
+    blue_tree = create_quadtree(size, blue_img, width, height, epsilon);
+}
 
+void decode_quadtree_color(int size, QuadTree<byte> *red_tree, QuadTree<byte> *green_tree, QuadTree<byte> *blue_tree,
+                           byte* red_imagedecoded, byte* green_imagedecoded, byte* blue_imagedecoded){
+    red_imagedecoded = new byte[size*size];
+    decode_quadtree(size, red_tree, red_imagedecoded);
+    green_imagedecoded = new byte[size*size];
+    decode_quadtree(size, green_tree, green_imagedecoded);
+    red_imagedecoded = new byte[size*size];
+    decode_quadtree(size, blue_tree, blue_imagedecoded);
+}
 
 void decode_quadtree(int size, QuadTree<byte>* q, byte* image, bool drawRectangles, int local_size, int i, int j){
     if(q->isLeaf()){
@@ -134,6 +146,7 @@ int number_elements(QuadTree<byte>* q){
                + number_elements(q->son(2)) + number_elements(q->son(3)));
     }
 }
+
 float compression_rate(QuadTree<byte>* q, int width, int height){
     return( 1.f - (float)number_elements(q)/(float)(width * height) );
 }

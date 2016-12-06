@@ -38,7 +38,6 @@ int main(){
     byte *image_decoded0 = new byte[size0*size0];
     decode_quadtree(size0, tree0, image_decoded0, true);
     putGreyImage(0, 0, image_decoded0, size0, size0);
-    // Pause
     click();
     cout<<"Empirical compression rate: ";
     cout<<compression_rate(tree0, width0, height0)<<endl;
@@ -46,6 +45,7 @@ int main(){
     // Pointers suppression
     delete image0;
     delete image_decoded0;
+
 
     // -------------- Grey image example 1------------------------
     // Get image file
@@ -72,11 +72,9 @@ int main(){
     cout<<"Empirical compression rate: ";
     cout<<compression_rate(tree, width, height)<<endl;
     closeWindow(window1);
-    // Exit
 
 
     // -------------- Grey image example 2------------------------
-    // Get image file
     // Load image
     byte* image2;
     cout << "Loading image: " << image_file << endl;
@@ -91,15 +89,59 @@ int main(){
     byte *image_decoded2 = new byte[size*size];
     decode_quadtree(size, tree2, image_decoded2, true);
     putGreyImage(0, 0, image_decoded2, size, size);
-
-    //Pause
     click();
     cout<<"Empirical compression rate: ";
     cout<<compression_rate(tree, width, height)<<endl;
     closeWindow(window2);
-    // Exit
+    delete image_decoded2;
+    delete image_decoded;
+    delete image2;
+    delete image;
+    delete tree;
+    delete tree2;
+
+    // -------------- Color image example ------------------------
+    // Get image file
+    const char *image_file3 = (argc > 1) ? argv[1] : srcPath("/forest.png");
+    // Load image
+    int width3, height3;
+    cout << "Loading image: " << image_file3 << endl;
+    byte* red_img;
+    byte* green_img;
+    byte* blue_img;
+    loadColorImage(image_file3, red_img, green_img, blue_img, width3, height3);
+    // Print statistics
+    cout << "Image size: " << width3 << "x" << height3 << endl;
+    cout << "Number of pixels: " << width3*height3 << endl;
+    //Display image
+    Window window3 = openWindow(width3, height3);
+    //putGreyImage(IntPoint2(0,0), image, width, height);
+    int size3 = myPow(2, int(log2(max(width3, height3))) + 1);
 
 
+    //Coding & decoding red
+    QuadTree<byte> *red_tree, *green_tree, *blue_tree;
+    create_quadtree_color(size3, red_img, green_img, blue_img,
+                          red_tree, green_tree, blue_tree, width3, height3, 50);
 
-    return 0;
+    byte *red_imgd = new byte[size3*size3];
+    decode_quadtree(size3, red_tree, red_imgd);
+    //Coding & decoding green
+    byte *green_imgd = new byte[size3*size3];
+    decode_quadtree(size3, green_tree, green_imgd);
+    //Coding & decoding blue
+    byte *blue_imgd = new byte[size3*size3];
+    decode_quadtree(size3, blue_tree, blue_imgd);
+
+    putColorImage(0, 0, red_imgd, green_imgd, blue_imgd, size3, size3);
+
+    //Pause
+    click();
+
+    closeWindow(window3);
+    delete red_img, green_img, blue_img;
+    delete red_tree, green_tree, blue_tree;
+    delete red_imgd, green_imgd, blue_imgd;
 }
+
+
